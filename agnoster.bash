@@ -205,15 +205,27 @@ prompt_end() {
     CURRENT_BG=''
 }
 
-### virtualenv prompt
+### virtualenv or conda env prompt
 prompt_virtualenv() {
     if [[ -n $VIRTUAL_ENV ]]; then
         color=cyan
         prompt_segment $color $PRIMARY_FG
         prompt_segment $color white "$(basename $VIRTUAL_ENV)"
+    elif [[ -n $CONDA_DEFAULT_ENV ]]; then
+        color=cyan
+        prompt_segment $color $PRIMARY_FG
+        prompt_segment $color white "$CONDA_DEFAULT_ENV"
     fi
 }
 
+### Spack env prompt
+prompt_spackenv() {
+    if [[ -n $SPACK_ENV ]]; then
+        color=orange
+        prompt_segment $color $PRIMARY_FG
+        prompt_segment $color black "$(basename $SPACK_ENV)"
+    fi
+}
 
 ### Prompt components
 # Each component will draw itself, and hide itself if no information needs to be shown
@@ -221,8 +233,13 @@ prompt_virtualenv() {
 # Context: user@hostname (who am I and where am I)
 prompt_context() {
     local user=`whoami`
+    local hostname=`uname -n`
 
-    if [[ $user != $DEFAULT_USER || -n $SSH_CLIENT ]]; then
+    if [[ $hostname = "picotte001" ]]; then
+        prompt_segment black default "🥦"
+    elif [[ $hostname = "picottemgmt" ]]; then
+        prompt_segment black default "🌶"
+    elif [[ $user != $DEFAULT_USER || -n $SSH_CLIENT ]]; then
         prompt_segment black default "$user@\h"
     fi
 }
@@ -301,7 +318,7 @@ prompt_hg() {
 
 # Dir: current working directory
 prompt_dir() {
-    prompt_segment blue black '\w'
+    prompt_segment blue white '\w'
 }
 
 # Status:
@@ -441,6 +458,7 @@ build_prompt() {
     #[[ -z ${AG_NO_HIST+x} ]] && prompt_histdt
     [[ -z ${AG_NO_CONTEXT+x} ]] && prompt_context
     prompt_virtualenv
+    prompt_spackenv
     prompt_dir
     prompt_git
     prompt_hg
