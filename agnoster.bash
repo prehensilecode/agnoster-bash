@@ -108,6 +108,7 @@ fg_color() {
         cyan)       echo 36;;
         white)      echo 37;;
         orange)     echo 38\;5\;166;;
+        indigo)     echo 38\;5\;18;;
     esac
 }
 
@@ -122,6 +123,7 @@ bg_color() {
         cyan)       echo 46;;
         white)      echo 47;;
         orange)     echo 48\;5\;166;;
+        indigo)     echo 48\;5\;18;;
     esac;
 }
 
@@ -318,7 +320,7 @@ prompt_hg() {
 
 # Dir: current working directory
 prompt_dir() {
-    prompt_segment blue white '\w'
+    prompt_segment indigo white '\w'
 }
 
 # Status:
