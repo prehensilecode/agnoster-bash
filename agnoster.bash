@@ -95,8 +95,8 @@ text_effect() {
 }
 
 # to add colors, see
-# http://bitmote.com/index.php?post/2012/11/19/Using-ANSI-Color-Codes-to-Colorize-Your-Bash-Prompt-on-Linux
-# under the "256 (8-bit) Colors" section, and follow the example for orange below
+# - https://stackoverflow.com/a/33206814/299952
+# - https://github.com/termstandard/colors
 fg_color() {
     case "$1" in
         black)      echo 30;;
